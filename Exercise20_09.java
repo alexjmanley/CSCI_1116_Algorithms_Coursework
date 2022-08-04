@@ -68,19 +68,22 @@ public class Exercise20_09 extends Application {
 	        Math.random(), Math.random(), 0.5);
 	      getChildren().add(new Ball(30, 30, Math.floor(Math.random() * (20 - 2 + 1)) + 2, color)); 
 	    }
-	    public void subtract() {
+	    public void subtract() { 
 	      if (getChildren().size() > 0) {
+	    	  Node max = getChildren().get(getChildren().size() - 1);
 	    	  for (Node e: getChildren()) {
-	    		  if(compare(e, getChildren().get(0)) > 0)
-	    			  getChildren().set(0, e);
+	    		  for(Node f: getChildren()) {
+	    		  if(compare(e, f) == -1)
+	    		  max = f;
 	    	  }
-	        getChildren().remove(0);
+	    	  }
+	        getChildren().remove(max);
 	      }
 	    }
 	    @Override
-		public int compare(Node e, Node node) {
+		public int compare(Node e, Node f) {
 			double r1 = ((Circle) e).getRadius();
-			double r2 = ((Circle) node).getRadius();
+			double r2 = ((Circle) f).getRadius();
 			
 			if (r1 < r2)
 				return -1; 
@@ -139,3 +142,4 @@ public class Exercise20_09 extends Application {
 	    launch(args);
 	  }
 }
+
