@@ -1,4 +1,4 @@
-package exercise21_11;
+package programming21_11;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -64,12 +64,28 @@ public class Exercise21_11 extends Application {
 	  for (int i = 0; i < 10; i++) {
 		  try {
 			Scanner input = new Scanner(urls[i].openStream());
-			System.out.println(input.hasNext());
+			int rank = 0; 
+			String boy = null; 
+			String girl = null; 
+			while (input.hasNext() == true) {
+				rank = Integer.parseInt(input.next()); 
+				boy = input.next().toLowerCase(); 
+				input.next();
+				girl = input.next().toLowerCase(); 
+				input.next(); 
+				mapForBoy[i].put(boy, rank); 
+				mapForGirl[i].put(girl, rank); 
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	  }
+	  // set on action for ranking button 
+	  btFindRanking.setOnAction(e -> {
+		  Scene scene = new Scene(answerpane(), 370, 160);
+		  primaryStage.setScene(scene);
+	  });
 	 
 	GridPane gridPane = new GridPane();
     gridPane.add(new Label("Select a year:"), 0, 0);
@@ -101,11 +117,24 @@ public class Exercise21_11 extends Application {
         
     cboGender.getItems().addAll("Male", "Female");
     cboGender.setValue("Male");
-    
 
-    
   }
-
+  	public BorderPane answerpane() {
+  		String gender = this.cboGender.getValue();
+  		int year = this.cboYear.getValue() - 2001;
+  		String name = this.tfName.getText().toLowerCase(); 
+  		int rank = 0; 
+  		if(gender.equalsIgnoreCase("male")) 
+  			rank = this.mapForBoy[year].get(name);
+  		else
+  			rank = this.mapForGirl[year].get(name); 
+  		String value = String.valueOf(rank); 
+  		Label label = new Label(value); 
+  		BorderPane pane = new BorderPane();
+  		pane.setCenter(label);
+		return pane;
+  	}
+  
   /**
    * The main method is only needed for the IDE with limited
    * JavaFX support. Not needed for running from the command line.
