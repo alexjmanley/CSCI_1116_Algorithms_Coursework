@@ -24,8 +24,6 @@ public class Exercise22_03 {
 		for (int i = 0; i < s1.length(); i++) {
 			if (s1.substring(i).length() >= s2.length() && s1.substring(i, i + s2.length()).equals(s2))
 				index = i; 
-			else 
-				index = index; 
 		}
 		if(index == -1)
 			System.out.println("No Match");
