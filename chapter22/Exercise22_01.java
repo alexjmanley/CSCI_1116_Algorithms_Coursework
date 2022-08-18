@@ -1,35 +1,40 @@
 package exercise22_1;
 
 /* Alex Manley 
- * 05/17/2022
+ * Aug 18, 2022
  * 
- * analyze time 
+ * My estimate big O time is O(n) 
  */
-import java.util.Scanner; 
+
+import java.util.Scanner;
 import java.util.ArrayList; 
 
 public class Exercise22_01 {
 
 	public static void main(String[] args) {
-		// create Scanner 
-		Scanner input = new Scanner(System.in);
+		Scanner input = new Scanner(System.in); 
 		
-		//get string from user
+		//prompt user
 		System.out.println("Enter a string: ");
 		String user = input.next(); 
-		 
-		// loop to find the maximum consecutive increasingly ordered substring
-		String maximum = null; 
+		
+		// make loop and array to find max substring
+		ArrayList<Character> max = new ArrayList<>();
+		ArrayList<Character> newList = new ArrayList<>(); 
+		
 		for (int i = 0; i < user.length(); i++) {
-			int count = 0;
-			while(Character.compare(user.charAt(i), user.charAt(i + 1)) < 0) {
-				count++; 
-				i++; 
+			if(newList.size() > 1 && newList.get(newList.size() - 1) > user.charAt(i))
+				newList.clear();
+			newList.add(user.charAt(i));	
+			if(newList.size() > max.size()) {
+				max.clear();
+				max.addAll(newList);
 			}
-			if(maximum == null ||count > maximum.length())
-				maximum = user.substring(i - count, i);
 		}
-		System.out.println("Maximum consecutive substring is " + maximum);
+		
+		//print
+		for (Character e: max)
+			System.out.print(e);
 
 	}
 
